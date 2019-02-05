@@ -17,7 +17,8 @@ object CommandLineTools {
   }
 
   def usage(message: String, mainClass: Class[_])(implicit stream: PrintStream): Unit = {
-    stream.println(message format mainClass.getCanonicalName)
-    throw new RuntimeException(message)
+    val usageMessage = message format mainClass.getCanonicalName
+    stream.println(usageMessage)
+    throw new RuntimeException(usageMessage)
   }
 }

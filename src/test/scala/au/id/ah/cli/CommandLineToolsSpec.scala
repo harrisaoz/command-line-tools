@@ -1,3 +1,5 @@
+package au.id.ah.cli
+
 import java.io.{ByteArrayOutputStream, PrintStream}
 import java.nio.charset.StandardCharsets
 
@@ -15,6 +17,13 @@ class CommandLineToolsSpec extends Specification {
         _.length == 2)(
         "This example requires two arguments but only one was provided", this.getClass)
         .should(throwA[RuntimeException])
+    }
+    "throw a RunTimeException that names the provided class if checkExpr is false" in {
+        sanityCheckArgs(
+          Array("one"))(
+          _.length == 2)(
+          "Running %s: this example requires two arguments but only one was provided", this.getClass)
+        .should(throwA[RuntimeException](".*" + this.getClass.getCanonicalName + ".*"))
     }
     "report the usage message if the check expression evaluates to false" in {
       val usageMessage = "This example emits a usage message"
